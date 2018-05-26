@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/hzyhdbts/!svn/ver/68/branches/dev1/src/tasks
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/hzyhdbts/!svn/ver/68/branches/dev1/src/tasks/__init__.py
+END
+celery.py
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/hzyhdbts/!svn/ver/68/branches/dev1/src/tasks/celery.py
+END
