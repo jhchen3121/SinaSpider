@@ -15,12 +15,17 @@
 
   ```
   (sinaspider)jhchen:SinaSpider jhchen$ ls
-
+  
   docs pip  src
-
+  
   (sinaspider)jhchen:SinaSpider jhchen$ cd src/scripts/
-
+  
   (sinaspider)jhchen:scripts jhchen$ sh init-mysql.sh 
+  (sinaspider)jhchen:scripts jhchen$ sh init-table.sh 
+  删除ss_sina_user表
+  删除完毕
+  创建ss_sina_user表
+  创建完成
   ```
 
 #### 项目运行
