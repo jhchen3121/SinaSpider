@@ -16,8 +16,11 @@ from sqlalchemy import func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.declarative import api 
 
-
 import settings
+
+"""
+封装sqlalchemy数据库操作
+"""
 
 Session=sessionmaker()
 _session_pool = dict()

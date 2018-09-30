@@ -22,7 +22,6 @@ DB_URL = 'mysql+mysqldb://sinaspider:sinaspider@localhost/sinaspiderdb?charset=u
 
 MONGO_URL = "'mongodb://localhost:27017/'"
 
-SECRET_KEY = '\xff\xc2+\xb2@T\x1c\n\x8b\xd7\x93\xf7\xaf\xf2R\x9b\xf0\xd2W\xba\xaa\xbe\xa6\x8b\xb8\xa2uQ\xe8E\x92\x8e\x8f\xdb\x95o!\x92\xe0\x02\xbf\xa9\x1fi\x87\xfe\x97F'
 EXPIRES_IN = 60 * 100   # 60s * 100
 MQ_URL = "amqp://guest:guest@127.0.0.1:5672/%2F"
 
