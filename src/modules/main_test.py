@@ -11,7 +11,7 @@ from user_msg_get import user_publish_msg_get
 
 if __name__ == '__main__':
 
-    session, user_id = login.user_login('13587703727', 'cjhcjh19961996')
+    session, user_id = login.user_login('xxx', 'xxx')
 
     #用户关注微博博主发表的内容
     #user_concern_msg_get.msg_get(session, user_id)

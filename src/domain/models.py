@@ -10,3 +10,6 @@ from domain import domain
 
 class SinaUser(DomainBase):
     __table__ = domain.ss_sina_user
+
+class TraningCollection(DomainBase):
+    __table__ == domain.traning_collection

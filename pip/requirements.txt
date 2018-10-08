@@ -30,3 +30,6 @@ tabulate==0.7.7
 #xlutils==2.0.0
 #xlwt==1.0.0
 gunicorn==19.7.1
+selenium==3.14.1
+PyVirtualDisplay==0.2.1
+pillow==5.3.0
