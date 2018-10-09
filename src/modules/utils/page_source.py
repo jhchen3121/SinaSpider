@@ -8,6 +8,7 @@ import logging
 import time
 import sys
 import os
+import requests
 
 from utils.webdriver import WeiboDriver
 from lxml import etree
@@ -114,9 +115,63 @@ class PageSource(WeiboDriver):
                     if content:
                         print '用户自己发表：' + content[0]
 
+    def get_ohter_peoples_mesg(self):
+        ''' 获取他人所发表的微博 '''
+        pass
+
+    def get_concern_list(self, user_detail):
+        ''' 获取用户关注列表 '''
+        user_id = user_detail.get('user_id')
+
+        # 关注列表键值对，存放关注列表以及对应的url
+        concern_list = []
+
+        # 拼接请求url,提高效率不去模拟点击操作, 可能存在多页的情况
+        try:
+            url = 'https://weibo.cn/{user_id}/follow?page={pageNum}'.format(user_id=user_id, pageNum=1)
+
+            self.driver.get(url)
+            time.sleep(1)
+
+            resp = self.driver.page_source
+            selector = etree.HTML(resp)
+
+            pageNum = (int)(selector.xpath('//input[@name="mp"]')[0].attrib['value'])
+        except:
+            pageNum = 1 
+
+        print pageNum
+            
+        for i in range(1, pageNum+1):
+            url = 'https://weibo.cn/{user_id}/follow?page={pageNum}'.format(user_id=user_id, pageNum=i)
+
+            self.driver.get(url)
+            time.sleep(1)
+
+            resp = self.driver.page_source
+            select = etree.HTML(resp)
+
+            dom_tree = select.xpath(r'//td[@valign="top"]')
+
+            for each_dom in dom_tree:
+                try:
+                    each_name = each_dom.xpath(r'.//a/text()')[0]
+                    each_url = each_dom.xpath(r'.//a/@href')[0]
+                    #concern_dict[each_name] = each_url
+                    concern_list.append(each_url)
+                except Exception, e:
+                    continue
+
+        # 用户关注的人对应的id
+        concern_id_list = []
+        for i in concern_list:
+            concern_id = i.split('/')[-1]
+            concern_id_list.append(concern_id)
+
 if __name__ == '__main__':
     with PageSource() as ps:
         ps.run('13587703727', 'cjhcjh19961996')
         user_detail = ps.get_user_detail()
-        ps.get_user_weibo(user_detail)
+        #ps.get_user_weibo(user_detail)
+        ps.get_concern_list(user_detail)
 
