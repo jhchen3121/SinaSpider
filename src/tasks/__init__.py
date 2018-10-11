@@ -5,7 +5,6 @@ from __future__ import absolute_import
 
 from celery import Celery
 
-
 # 创建 Celery 实例
 app = Celery('tasks')
 

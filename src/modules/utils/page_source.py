@@ -31,6 +31,12 @@ class PageSource(WeiboDriver):
 
         time.sleep(1)
 
+        # 获取微博发表数目，粉丝数以及关注
+        resp = etree.HTML(self.driver.page_source)
+        weibo_publish_count = resp.xpath('/html/body/div[5]/div[2]/a[1]/text()')[0].split('[')[1].split(']')[0]
+        concern_count = resp.xpath('/html/body/div[5]/div[2]/a[2]/text()')[0].split('[')[1].split(']')[0]
+        fans_count = resp.xpath('/html/body/div[5]/div[2]/a[3]/text()')[0].split('[')[1].split(']')[0]
+
         # 获取详细资料按钮
         detail_button = self.driver.find_element_by_xpath('/html/body/div[5]/div[1]/a[2]')
         detail_button.click()
@@ -61,7 +67,10 @@ class PageSource(WeiboDriver):
             user_address=user_address,
             constellation=constellation,
             sexual_orientation=sexual_orientation,
-            relationship=relationship
+            relationship=relationship,
+            weibo_publish_count=weibo_publish_count,
+            concern_count=concern_count,
+            fans_count=fans_count
         )
 
         return user_detail_dict
@@ -99,21 +108,29 @@ class PageSource(WeiboDriver):
             selector = etree.HTML(resp)
 
             for each_dom in selector.xpath(r'//div[@class="c"]'):
-                #是否为转发
-                forward = each_dom.xpath(r'.//span[@class="cmt"]')
-                if forward:
-                    forward = forward[0]
-                    print forward.xpath('string(.)')
+                # 获取发表时间
 
-                    content = each_dom.xpath(r'.//span[@class="ctt"]/text()')
+                try:
+                    publish_date = each_dom.xpath(r'.//span[@class="ct"]/text()')[0][:19]
 
-                    if content:
-                        print content[0]
-                else:
-                    content = each_dom.xpath(r'.//span[@class="ctt"]/text()')
+                    #是否为转发
+                    forward = each_dom.xpath(r'.//span[@class="cmt"]')
+                    if forward:
+                        forward = forward[0]
+                        #print forward.xpath('string(.)')
+                        content = each_dom.xpath(r'.//span[@class="ctt"]/text()')
 
-                    if content:
-                        print '用户自己发表：' + content[0]
+                        if content:
+                            #print publish_date, content[0]
+                            yield {'publish_date': publish_date, 'content': '转发:' + content[0]}
+                    else:
+                        content = each_dom.xpath(r'.//span[@class="ctt"]/text()')
+
+                        if content:
+                            #print publish_date, '用户自己发表:' + content[0]
+                            yield {'publish_date': publish_date, 'content': '用户自己发表:' + content[0]}
+                except Exception, e:
+                    continue
 
     def get_ohter_peoples_mesg(self):
         ''' 获取他人所发表的微博 '''
@@ -140,8 +157,6 @@ class PageSource(WeiboDriver):
         except:
             pageNum = 1 
 
-        print pageNum
-            
         for i in range(1, pageNum+1):
             url = 'https://weibo.cn/{user_id}/follow?page={pageNum}'.format(user_id=user_id, pageNum=i)
 
@@ -168,10 +183,14 @@ class PageSource(WeiboDriver):
             concern_id = i.split('/')[-1]
             concern_id_list.append(concern_id)
 
+        return concern_id_list
+
 if __name__ == '__main__':
     with PageSource() as ps:
         ps.run('13587703727', 'cjhcjh19961996')
         user_detail = ps.get_user_detail()
-        #ps.get_user_weibo(user_detail)
-        ps.get_concern_list(user_detail)
+
+        for i in ps.get_user_weibo(user_detail):
+            print i
+        #ps.get_concern_list(user_detail)
 

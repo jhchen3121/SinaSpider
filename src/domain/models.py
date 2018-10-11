@@ -13,3 +13,6 @@ class SinaUser(DomainBase):
 
 class TraningCollection(DomainBase):
     __table__ == domain.traning_collection
+
+class Sina_user_detail(DomainBase):
+    __table__ == domain.ss_sina_user_detail
