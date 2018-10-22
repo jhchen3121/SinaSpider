@@ -21,11 +21,14 @@ ss_sina_user = Table('ss_sina_user', con.metadata,
 #traning set
 traning_collection = Table('traning_collection', con.metadata,
     Column('id', BigInteger, Sequence('traning_collection_seq'), primary_key=True),
-    Column('user_id', BigInteger, doc="用户id"),
+
+    Column('user_id', String(128), doc="用户id"),
     Column('user_name', String(256), doc="用户名"),
-    Column('value', String(2048), doc="发表内容"),
-    Column('from_time', String(60), doc="发表时间"),
-    Column('thru_time', String(60), doc="删除时间"),
+    Column('content', String(2048), doc="发表内容"),
+    Column('publish_date', String(60), doc='发表时间'),
+
+    Column('from_time', DateTime, doc="创建时间"),
+    Column('thru_time', DateTime, doc="删除时间"),
 )
 
 # 用户基本信息
@@ -33,7 +36,7 @@ ss_sina_user_detail = Table('ss_sina_user_detail', con.metadata,
     
     Column('id', BigInteger, Sequence('ss_sina_user_detail_seq'), primary_key=True),
 
-    Column('user_id', BigInteger, doc="用户id"),
+    Column('user_id', String(128), doc="用户id"),
     Column('user_name', String(256), doc="用户名"),
     Column('sex', String(16), doc="性别"),
     Column('user_address', String(128), doc="地址"),
@@ -44,7 +47,19 @@ ss_sina_user_detail = Table('ss_sina_user_detail', con.metadata,
     Column('weibo_publish_count', BigInteger, doc="微博发表数目"),
     Column('concern_count', BigInteger, doc="关注数"),
     
-    Column('from_time', String(60), doc="发表时间"),
-    Column('thru_time', String(60), doc="删除时间"),
+    Column('from_time', DateTime, doc="创建时间"),
+    Column('thru_time', DateTime, doc="删除时间"),
+)
+
+# 用户关注人列表
+ss_sina_user_concern = Table('ss_sina_user_concern', con.metadata,
+
+    Column('id', BigInteger, Sequence('ss_sina_user_concern_seq'), primary_key=True),
+
+    Column('user_id', String(128), doc="用户id"),
+    Column('concern_id', String(128), doc="关注人id"),
+
+    Column('from_time', DateTime, doc="创建时间"),
+    Column('thru_time', DateTime, doc="删除时间"),
 )
 
