@@ -1,0 +1,26 @@
+[2019-04-05 20:31:30,525: INFO/MainProcess] Connected to redis://127.0.0.1:6379//
+[2019-04-05 20:31:30,532: INFO/MainProcess] mingle: searching for neighbors
+[2019-04-05 20:31:31,549: INFO/MainProcess] mingle: all alone
+[2019-04-05 20:31:31,561: INFO/MainProcess] celery@localhost.localdomain ready.
+
+worker: Warm shutdown (MainProcess)
+ 
+ -------------- celery@localhost.localdomain v4.1.1 (latentcall)
+---- **** ----- 
+--- * ***  * -- Linux-2.6.32-754.2.1.el6.x86_64-x86_64-with-centos-6.10-Final 2019-04-05 20:31:30
+-- * - **** --- 
+- ** ---------- [config]
+- ** ---------- .> app:         tasks:0x7f058220ed10
+- ** ---------- .> transport:   redis://127.0.0.1:6379//
+- ** ---------- .> results:     redis://127.0.0.1:6379/0
+- *** --- * --- .> concurrency: 2 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> weibo_spider     exchange=spider(direct) key=tasks.weibo_spider
+                
+
+[tasks]
+  . tasks.analysis.analysis_test
+  . tasks.weibo_spider.spider_msg_get
+

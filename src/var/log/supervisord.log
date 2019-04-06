@@ -1,0 +1,21 @@
+2019-04-05 20:31:28,941 INFO Included extra file "/home/jhchen/workspace/spider/SinaSpider/src/etc/supervisord/analysis.conf" during parsing
+2019-04-05 20:31:28,941 INFO Included extra file "/home/jhchen/workspace/spider/SinaSpider/src/etc/supervisord/default.conf" during parsing
+2019-04-05 20:31:28,941 INFO Included extra file "/home/jhchen/workspace/spider/SinaSpider/src/etc/supervisord/weibo_spider.conf" during parsing
+2019-04-05 20:31:28,948 INFO RPC interface 'supervisor' initialized
+2019-04-05 20:31:28,948 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2019-04-05 20:31:28,949 INFO daemonizing the supervisord process
+2019-04-05 20:31:28,949 INFO set current directory: '/home/jhchen/workspace/spider/SinaSpider/src'
+2019-04-05 20:31:28,956 INFO supervisord started with pid 122444
+2019-04-05 20:31:29,960 INFO spawned: 'default' with pid 122446
+2019-04-05 20:31:29,963 INFO spawned: 'weibo_spider' with pid 122447
+2019-04-05 20:31:29,965 INFO spawned: 'analysis' with pid 122448
+2019-04-05 20:31:35,394 INFO success: default entered RUNNING state, process has stayed up for > than 5 seconds (startsecs)
+2019-04-05 20:31:35,395 INFO success: weibo_spider entered RUNNING state, process has stayed up for > than 5 seconds (startsecs)
+2019-04-05 20:31:35,395 INFO success: analysis entered RUNNING state, process has stayed up for > than 5 seconds (startsecs)
+2019-04-05 20:31:35,404 INFO waiting for default to stop
+2019-04-05 20:31:35,404 INFO waiting for weibo_spider to stop
+2019-04-05 20:31:35,404 INFO waiting for analysis to stop
+2019-04-05 20:31:36,961 INFO stopped: analysis (exit status 0)
+2019-04-05 20:31:36,962 INFO stopped: default (exit status 0)
+2019-04-05 20:31:36,963 INFO stopped: weibo_spider (exit status 0)
+2019-04-05 20:31:37,977 WARN received SIGTERM indicating exit request
