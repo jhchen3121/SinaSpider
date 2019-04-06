@@ -76,14 +76,25 @@ class WeiboDriver(object):
         element_password.send_keys(password)
         element_button.click()
 
-        time.sleep(3)
+        time.sleep(10)
 
         # 若出现了手势密码
         try:
             img = self.driver.find_element_by_class_name('patt-holder-body')
             return True
-        except Exception, e:
-            return False
+        except Exception:
+            print '不存在手势验证码'
+        
+        # 若需要点击验证
+        try:
+            #check_button = self.driver.find_element_by_id('embed-captcha')
+            check_button = self.driver.find_element_by_class_name('geetest_radar_tip')
+            check_button.click()
+            time.sleep(15)
+        except Exception:
+            print '不存在验证按钮'
+
+        return False
 
     def get_position(self):
         ''' 获取验证码位置 '''
@@ -230,20 +241,15 @@ class WeiboDriver(object):
         numbers = self.detect_image(image)
         self.move(numbers)
 
-    def save_verify_temp(self):
+    def save_verify_temp(self, username, passwd):
         ''' 保存24种可能存在的验证码至本地 '''
 
         # 需要手动筛选
 
-        self.submit_data('https://passport.weibo.cn/signin/login', '13587703727', 'cjhcjh19961996')
+        self.submit_data('https://passport.weibo.cn/signin/login', username, passwd)
 
         for i in range(1, 100):
             print i
             captcha = self.get_verify_image()
 
             captcha.svae('{}/{}.png'.format(self.proj_dir, i))
-
-if __name__ == '__main__':
-    with WeiboDriver() as wd:
-        #wd.save_verify_temp()
-        wd.run('13587703727', 'cjhcjh19961996')

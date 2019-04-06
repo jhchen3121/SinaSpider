@@ -21,6 +21,7 @@ sys.setdefaultencoding('utf8')
 
 """
 创建训练集
+方法参考：https://www.ibm.com/developerworks/cn/cognitive/library/cc-1606-spark-seniment-analysis/index.html
 """
 
 def init_tranining_set(sc):
@@ -97,10 +98,9 @@ def init_tranining_set(sc):
     accuracy = 1.0 * predictionAndLabel.filter(lambda x: 1.0 \
             if x[0] == x[1] else 0.0).count() / test.count()
 
-    # 存储训练结果
-    #with open('hashingTF.pkl', 'w') as f:
-    #    pickle.dump(hashingTF, f)
-    words.repartition(1).saveAsTextFile("traning_words.csv")
+    # 文本按照csv格式存储
+    words.repartition(1).saveAsTextFile("traning_words")
+    # 贝叶斯分类模型以pickle存储
     with open('NBmodel.pkl', 'w') as f:
         pickle.dump(NBmodel, f)
 

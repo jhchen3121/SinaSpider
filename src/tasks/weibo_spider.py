@@ -22,7 +22,8 @@ def spider_msg_get(username, password):
     :param: password 密码
     '''
     with PageSource() as ps:
-        ps.run('13587703727', 'cjhcjh19961996')
+        # FIXME 填入自己的账号密码
+        ps.run('xxx', 'xxx')
         user_detail = ps.get_user_detail()
 
         print user_detail

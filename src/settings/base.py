@@ -13,6 +13,9 @@ HOME_DIR = os.environ['HOME']
 # 页面目录
 STATIC_DIR = os.path.join(PROJ_DIR, 'web')
 
+# 文件目录
+DATA_DIR = os.path.join(PROJ_DIR, 'data')
+
 # 日志格式
 LOG_FMT = '%(levelname) -6s %(asctime)s  %(filename)-20s %(lineno) -5d: %(message)s'
 

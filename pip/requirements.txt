@@ -33,3 +33,4 @@ gunicorn==19.7.1
 selenium==3.14.1
 PyVirtualDisplay==0.2.1
 pillow==5.3.0
+supervisor==3.3.2
