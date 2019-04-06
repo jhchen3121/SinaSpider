@@ -1,0 +1,95 @@
+#!/bin/bash
+
+if ! type -p celery >/dev/null;then 
+    cd `dirname $0`
+    cd ..
+    source ./env.sh
+fi
+
+cd $PROJ_DIR
+
+pidfile=${PROJ_DIR}/var/run/supervisord.pid
+
+workdir=${PROJ_DIR}
+
+cd $workdir
+
+start() {
+    if [ -e ${pidfile} ];then
+        echo "supervisord is running. need stop it first"
+        exit 1
+    fi
+    echo -n "Starting supervisord"
+    supervisord -c etc/supervisord.conf -d ${workdir}
+    count=0
+    while true;do
+        echo -n .
+        if [ -e ${pidfile} ];then
+            break
+        fi
+        sleep 1
+    done
+    echo "done"
+}
+
+stop() {
+    if [ -e ${pidfile} ];then
+        cpid=`cat ${pidfile}`
+        echo -n -e "Try to kill supervisord\n"
+        supervisorctl -c etc/supervisord.conf stop all
+        count=0
+        kill  $cpid
+        while [ -e /proc/$cpid ];do
+            kill  $cpid
+            sleep 1
+            let count+=1
+            if [ $count -gt 5 ];then
+                echo "failed"
+                echo "Can't kill supervisord"
+                exit 1
+            fi
+            echo -n '.'
+        done
+        echo "done"
+    fi
+}
+
+show_status() {
+    if [ -e ${pidfile} ];then
+        echo "supervisord is runing. pid is `cat ${pidfile}`"
+        supervisorctl -c etc/supervisord.conf status
+    else
+        echo "supervisord is not runing"
+    fi
+}
+
+reread() {
+    if [ -e ${pidfile} ];then
+        supervisorctl -c etc/supervisord.conf reread
+    else
+        echo "supervisord is not runing"
+    fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+        
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    reread)
+        reread
+        ;;
+    status)
+        show_status
+        ;;
+    *)
+        echo "$0 [start] [stop] [restart] [reread] [status]"
+        ;;
+esac
