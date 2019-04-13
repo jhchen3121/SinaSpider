@@ -55,8 +55,19 @@ class Analyse(Spark):
         return NBmodel.predict(yourtfidf), data
 
 if __name__ == '__main__':
+
+    from core.database import get_session
+    from domain.models import Analyse_result
+
     s = Analyse()
-    rate, res = s.analyse_data('部电影没有意思，剧情老套，真没劲, 后悔来看了')
-    print rate, res
-    rate, res = s.analyse_data('太精彩了讲了一个关于梦想的故事剧情很反转制作也很精良')
-    print rate, res
+    session = get_session(settings.DB_URL)
+    for r in session.execute('select * from traning_collection').fetchall():
+        user_id = r[1]
+        user_name = r[2]
+        content = r[3]
+        rate, _ = s.analyse_data(content)
+
+        obj = Analyse_result(user_id=user_id,user_name=user_name,rate=rate,content=content)
+        
+        session.add(obj)
+        session.commit()

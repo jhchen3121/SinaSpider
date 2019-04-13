@@ -63,3 +63,17 @@ ss_sina_user_concern = Table('ss_sina_user_concern', con.metadata,
     Column('thru_time', DateTime, doc="删除时间"),
 )
 
+# 情感分析结果
+ss_analyse_result = Table('ss_analyse_result', con.metadata,
+
+    Column('id', BigInteger, Sequence('ss_analyse_result_seq'), primary_key=True),
+
+    Column('user_id', String(128), doc="用户id"),
+    Column('user_name', String(256), doc="用户名"),
+    Column('rate', BigInteger, doc="情感分析结果"),
+    Column('content', String(2048), doc="发表内容"),
+
+    Column('from_time', DateTime, doc="创建时间"),
+    Column('thru_time', DateTime, doc="删除时间"),
+)
+

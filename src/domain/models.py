@@ -6,13 +6,16 @@ from __future__ import absolute_import
 
 from core.database import DomainBase
 
-from domain import domain
+from domain import domains
 
 class SinaUser(DomainBase):
-    __table__ = domain.ss_sina_user
+    __table__ = domains.ss_sina_user
 
 class TraningCollection(DomainBase):
-    __table__ == domain.traning_collection
+    __table__ = domains.traning_collection
 
 class Sina_user_detail(DomainBase):
-    __table__ == domain.ss_sina_user_detail
+    __table__ = domains.ss_sina_user_detail
+
+class Analyse_result(DomainBase):
+    __table__ = domains.ss_analyse_result

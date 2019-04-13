@@ -10,7 +10,7 @@ import settings
 
 def create_table():
 
-    from domain import domain
+    from domain import domains
 
     for table in con.metadata.tables:
         print ('创建{}表'.format(table))
